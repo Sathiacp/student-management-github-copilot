@@ -69,6 +69,12 @@ function App() {
       return
     }
 
+    // Check that a course has been selected before adding the student
+    if (inputCourse.trim() === '') {
+      alert('Please select a course')
+      return
+    }
+
     // Find the highest existing ID and add 1 to create a unique ID
     const nextId = students.reduce((maxId, student) => Math.max(maxId, student.id), 0) + 1
 
