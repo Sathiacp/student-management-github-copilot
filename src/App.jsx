@@ -167,6 +167,9 @@ function App() {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {searchTerm.trim() !== '' && (
+          <button onClick={() => setSearchTerm('')}>Clear Search</button>
+        )}
       </div>
 
       <table className="student-table">
