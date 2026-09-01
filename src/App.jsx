@@ -41,9 +41,12 @@ function App() {
       return
     }
 
+    // Find the highest existing ID and add 1 to create a unique ID
+    const nextId = students.reduce((maxId, student) => Math.max(maxId, student.id), 0) + 1
+
     // Create a new student
     const newStudent = {
-      id: students.length + 1,
+      id: nextId,
       name: inputName,
       email: inputEmail,
       course: inputCourse
@@ -56,6 +59,12 @@ function App() {
     setInputName('')
     setInputEmail('')
     setInputCourse('')
+  }
+
+  // Function to delete a student
+  const deleteStudent = (id) => {
+    const updatedStudents = students.filter((s) => s.id !== id)
+    setStudents(updatedStudents)
   }
 
   return (
@@ -94,6 +103,7 @@ function App() {
             <th>Name</th>
             <th>Email</th>
             <th>Course</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -104,6 +114,9 @@ function App() {
               <td>{student.name}</td>
               <td>{student.email}</td>
               <td>{student.course}</td>
+              <td>
+                <button onClick={() => deleteStudent(student.id)}>Delete</button>
+              </td>
             </tr>
           ))}
         </tbody>
