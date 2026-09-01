@@ -36,6 +36,23 @@ function App() {
   // null means Add mode; otherwise this is the ID being edited
   const [editingStudentId, setEditingStudentId] = useState(null)
 
+  // Search text for filtering students by name, email, or course
+  const [searchTerm, setSearchTerm] = useState('')
+
+  // Filter students based on the search term (case-insensitive)
+  const filteredStudents = students.filter((student) => {
+    const query = searchTerm.trim().toLowerCase()
+
+    if (query === '') {
+      return true
+    }
+
+    return [student.name, student.email, student.course]
+      .join(' ')
+      .toLowerCase()
+      .includes(query)
+  })
+
   // Clear the form and return to Add mode
   const resetForm = () => {
     setInputName('')
@@ -143,6 +160,15 @@ function App() {
         </button>
       </div>
 
+      <div className="search-section">
+        <input
+          type="text"
+          placeholder="Search by name, email, or course"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+
       <table className="student-table">
         <thead>
           <tr>
@@ -155,18 +181,24 @@ function App() {
         </thead>
 
         <tbody>
-          {students.map((student) => (
-            <tr key={student.id}>
-              <td>{student.id}</td>
-              <td>{student.name}</td>
-              <td>{student.email}</td>
-              <td>{student.course}</td>
-              <td>
-                <button onClick={() => editStudent(student)}>Edit</button>
-                <button onClick={() => deleteStudent(student.id)}>Delete</button>
-              </td>
+          {filteredStudents.length > 0 ? (
+            filteredStudents.map((student) => (
+              <tr key={student.id}>
+                <td>{student.id}</td>
+                <td>{student.name}</td>
+                <td>{student.email}</td>
+                <td>{student.course}</td>
+                <td>
+                  <button onClick={() => editStudent(student)}>Edit</button>
+                  <button onClick={() => deleteStudent(student.id)}>Delete</button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">No matching students found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>
