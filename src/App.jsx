@@ -33,6 +33,17 @@ function App() {
   // State for the student course input
   const [inputCourse, setInputCourse] = useState('')
 
+  // null means Add mode; otherwise this is the ID being edited
+  const [editingStudentId, setEditingStudentId] = useState(null)
+
+  // Clear the form and return to Add mode
+  const resetForm = () => {
+    setInputName('')
+    setInputEmail('')
+    setInputCourse('')
+    setEditingStudentId(null)
+  }
+
   // Function to add a new student
   const addStudent = () => {
     // Check that the student name is not empty
@@ -47,24 +58,58 @@ function App() {
     // Create a new student
     const newStudent = {
       id: nextId,
-      name: inputName,
-      email: inputEmail,
-      course: inputCourse
+      name: inputName.trim(),
+      email: inputEmail.trim(),
+      course: inputCourse.trim()
     }
 
     // Add the new student to the existing list
     setStudents([...students, newStudent])
 
     // Clear the input fields
-    setInputName('')
-    setInputEmail('')
-    setInputCourse('')
+    resetForm()
+  }
+
+  // Function to start editing a student
+  const editStudent = (student) => {
+    setEditingStudentId(student.id)
+    setInputName(student.name)
+    setInputEmail(student.email)
+    setInputCourse(student.course)
+  }
+
+  // Function to save changes for the selected student
+  const saveStudent = () => {
+    if (inputName.trim() === '') {
+      alert('Please enter a name')
+      return
+    }
+
+    const updatedStudents = students.map((student) => {
+      if (student.id === editingStudentId) {
+        return {
+          ...student,
+          name: inputName.trim(),
+          email: inputEmail.trim(),
+          course: inputCourse.trim()
+        }
+      }
+
+      return student
+    })
+
+    setStudents(updatedStudents)
+    resetForm()
   }
 
   // Function to delete a student
   const deleteStudent = (id) => {
     const updatedStudents = students.filter((s) => s.id !== id)
     setStudents(updatedStudents)
+
+    if (editingStudentId === id) {
+      resetForm()
+    }
   }
 
   return (
@@ -93,7 +138,9 @@ function App() {
           onChange={(e) => setInputCourse(e.target.value)}
         />
 
-        <button onClick={addStudent}>Add Student</button>
+        <button onClick={editingStudentId === null ? addStudent : saveStudent}>
+          {editingStudentId === null ? 'Add Student' : 'Save Changes'}
+        </button>
       </div>
 
       <table className="student-table">
@@ -115,6 +162,7 @@ function App() {
               <td>{student.email}</td>
               <td>{student.course}</td>
               <td>
+                <button onClick={() => editStudent(student)}>Edit</button>
                 <button onClick={() => deleteStudent(student.id)}>Delete</button>
               </td>
             </tr>
