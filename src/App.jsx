@@ -69,6 +69,21 @@ function App() {
       return
     }
 
+    // Check that the student email is not empty and matches a basic email format
+    const email = inputEmail.trim()
+
+    if (email === '') {
+      alert('Please enter an email')
+      return
+    }
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(email)) {
+      alert('Please enter a valid email address')
+      return
+    }
+
     // Check that a course has been selected before adding the student
     if (inputCourse.trim() === '') {
       alert('Please select a course')
@@ -82,7 +97,7 @@ function App() {
     const newStudent = {
       id: nextId,
       name: inputName.trim(),
-      email: inputEmail.trim(),
+      email,
       course: inputCourse.trim()
     }
 
