@@ -183,6 +183,9 @@ function App() {
         <button onClick={editingStudentId === null ? addStudent : saveStudent}>
           {editingStudentId === null ? 'Add Student' : 'Save Changes'}
         </button>
+        {editingStudentId !== null && (
+          <button onClick={resetForm}>Cancel</button>
+        )}
       </div>
 
       <div className="search-section">
