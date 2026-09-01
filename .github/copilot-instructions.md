@@ -29,6 +29,7 @@ Define what is explicitly out of scope.
 Identify dependencies and potential risks.
 Define acceptance criteria.
 Do not modify files during planning.
+When the user asks for /plan, provide planning only. Never edit files.
 2. REVIEW
 
 Before implementation:
@@ -50,6 +51,8 @@ An explicit approval may be:
 "Implement"
 
 Do not interpret questions or discussion as approval.
+
+Always wait for explicit approval before implementing a plan.
 
 4. IMPLEMENT
 
@@ -74,6 +77,7 @@ Check that existing functionality still works.
 Check common edge cases.
 Fix only issues related to the approved feature.
 If a problem occurs, diagnose the cause before making broad changes.
+Run npm run build to verify the application builds successfully.
 
 Do not consider a feature complete until validation succeeds.
 
@@ -84,6 +88,7 @@ After successful validation:
 Create a focused Git commit.
 Do not combine unrelated changes into one commit.
 Use a clear commit message.
+Never commit unless explicitly instructed.
 
 Prefer Conventional Commit style, for example:
 
@@ -101,7 +106,9 @@ Implementation is complete.
 Validation succeeds.
 The changes have been committed.
 There are no unintended changes.
+Explicit instruction from the developer.
 
+Never push unless explicitly instructed.
 Never force-push unless explicitly requested.
 
 React Guidelines
@@ -159,6 +166,7 @@ Do not generate multiple features in one request.
 Do not create unnecessary files.
 Do not add libraries without a clear need.
 Ask for clarification when requirements are ambiguous.
+Keep responses concise and avoid repeating requirements.
 Scope Control
 
 For each approved feature:

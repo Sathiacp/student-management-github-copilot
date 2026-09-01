@@ -197,6 +197,8 @@ function App() {
         )}
       </div>
 
+      <p>Total Students: {students.length}</p>
+
       <table className="student-table">
         <thead>
           <tr>
