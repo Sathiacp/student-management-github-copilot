@@ -148,12 +148,16 @@ function App() {
           onChange={(e) => setInputEmail(e.target.value)}
         />
 
-        <input
-          type="text"
-          placeholder="Enter student course"
+        <select
           value={inputCourse}
           onChange={(e) => setInputCourse(e.target.value)}
-        />
+        >
+          <option value="">Select a course</option>
+          <option value="React Basics">React Basics</option>
+          <option value="JavaScript Advanced">JavaScript Advanced</option>
+          <option value="Web Design">Web Design</option>
+          <option value="Python">Python</option>
+        </select>
 
         <button onClick={editingStudentId === null ? addStudent : saveStudent}>
           {editingStudentId === null ? 'Add Student' : 'Save Changes'}
